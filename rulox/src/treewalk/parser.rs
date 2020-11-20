@@ -645,8 +645,11 @@ impl Parser {
     fn parse_logic<'a, I>(
         &mut self,
         tokens: &mut Peekable<I>,
-        map_operator: &Fn(&Token) -> Option<LogicOperator>,
-        parse_subexpression: &Fn(&mut Parser, &mut Peekable<I>) -> Option<Result<Expr, ParseError>>,
+        map_operator: &dyn Fn(&Token) -> Option<LogicOperator>,
+        parse_subexpression: &dyn Fn(
+            &mut Parser,
+            &mut Peekable<I>,
+        ) -> Option<Result<Expr, ParseError>>,
     ) -> Option<Result<Expr, ParseError>>
     where
         I: Iterator<Item = &'a TokenWithContext>,
@@ -687,8 +690,11 @@ impl Parser {
     fn parse_binary<'a, I>(
         &mut self,
         tokens: &mut Peekable<I>,
-        map_operator: &Fn(&Token) -> Option<BinaryOperator>,
-        parse_subexpression: &Fn(&mut Parser, &mut Peekable<I>) -> Option<Result<Expr, ParseError>>,
+        map_operator: &dyn Fn(&Token) -> Option<BinaryOperator>,
+        parse_subexpression: &dyn Fn(
+            &mut Parser,
+            &mut Peekable<I>,
+        ) -> Option<Result<Expr, ParseError>>,
     ) -> Option<Result<Expr, ParseError>>
     where
         I: Iterator<Item = &'a TokenWithContext>,
@@ -944,7 +950,7 @@ impl Parser {
     fn parse_function_arguments<'a, I, A>(
         &mut self,
         tokens: &mut Peekable<I>,
-        parse_argument: &Fn(&mut Parser, &mut Peekable<I>) -> Option<Result<A, ParseError>>,
+        parse_argument: &dyn Fn(&mut Parser, &mut Peekable<I>) -> Option<Result<A, ParseError>>,
     ) -> Result<Vec<A>, ParseError>
     where
         I: Iterator<Item = &'a TokenWithContext>,
