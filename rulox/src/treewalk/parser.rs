@@ -167,7 +167,7 @@ impl Parser {
     fn parse_semicolon_terminated_statement<'a, I>(
         &mut self,
         tokens: &mut Peekable<I>,
-        parse_statement: &Fn(
+        parse_statement: &dyn Fn(
             &mut Parser,
             &mut Peekable<I>,
         ) -> Option<Result<Statement, ParseError>>,

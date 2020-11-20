@@ -135,7 +135,11 @@ impl<'a> Scanner<'a> {
         }
     }
 
-    fn peek_check2(&mut self, check1: &dyn Fn(char) -> bool, check2: &Fn(char) -> bool) -> bool {
+    fn peek_check2(
+        &mut self,
+        check1: &dyn Fn(char) -> bool,
+        check2: &dyn Fn(char) -> bool,
+    ) -> bool {
         self.source.reset_peek();
         match self.source.peek() {
             Some(&p1) => match self.source.peek() {
@@ -168,7 +172,7 @@ impl<'a> Scanner<'a> {
         }
     }
 
-    fn advance_while(&mut self, condition: &Fn(char) -> bool) -> () {
+    fn advance_while(&mut self, condition: &dyn Fn(char) -> bool) -> () {
         while self.peek_check(condition) {
             self.advance();
         }
