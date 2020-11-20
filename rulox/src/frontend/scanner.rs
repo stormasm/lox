@@ -153,7 +153,7 @@ impl<'a> Scanner<'a> {
             if c == '\n' {
                 self.current_position.increment_line();
             } else {
-                self.current_position.increment_column();;
+                self.current_position.increment_column();
             }
         };
         next
@@ -420,5 +420,4 @@ mod tests {
         assert_eq!(tokens[7].token, Token::Semicolon);
         assert_eq!(errors.len(), 1);
     }
-
 }

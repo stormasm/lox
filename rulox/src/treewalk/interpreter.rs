@@ -91,11 +91,9 @@ impl Callable {
             Callable::Class(ref class) => {
                 let instance = Instance::new(class);
                 if let Some(initializer) = class.methods.get(&Identifier::init()) {
-                    try!(
-                        initializer
-                            .bind(&instance)
-                            .call(arguments, _environment, scopes)
-                    );
+                    initializer
+                        .bind(&instance)
+                        .call(arguments, _environment, scopes)?;
                 }
                 Ok(Value::Instance(instance))
             }
@@ -570,8 +568,10 @@ impl Execute for Statement {
                 Ok(None)
             }
             Statement::IfThen(ref c) => {
-                let condition = try!{c.condition.interpret(environment, scopes)
-                .map(|v|v.is_true())};
+                let condition = c
+                    .condition
+                    .interpret(environment, scopes)
+                    .map(|v| v.is_true())?;
                 if condition {
                     c.then_branch.execute(environment, scopes)
                 } else {
@@ -579,8 +579,10 @@ impl Execute for Statement {
                 }
             }
             Statement::IfThenElse(ref c) => {
-                let condition = try!{c.condition.interpret(environment, scopes)
-                .map(|v|v.is_true())};
+                let condition = c
+                    .condition
+                    .interpret(environment, scopes)
+                    .map(|v| v.is_true())?;
                 if condition {
                     c.then_branch.execute(environment, scopes)
                 } else {
@@ -588,8 +590,10 @@ impl Execute for Statement {
                 }
             }
             Statement::While(ref l) => {
-                while try!{l.condition.interpret(environment, scopes)
-                .map(|v|v.is_true())}
+                while l
+                    .condition
+                    .interpret(environment, scopes)
+                    .map(|v| v.is_true())?
                 {
                     l.body.execute(environment, scopes)?;
                 }

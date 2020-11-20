@@ -167,8 +167,10 @@ impl Parser {
     fn parse_semicolon_terminated_statement<'a, I>(
         &mut self,
         tokens: &mut Peekable<I>,
-        parse_statement: &Fn(&mut Parser, &mut Peekable<I>)
-            -> Option<Result<Statement, ParseError>>,
+        parse_statement: &Fn(
+            &mut Parser,
+            &mut Peekable<I>,
+        ) -> Option<Result<Statement, ParseError>>,
     ) -> Option<Result<Statement, ParseError>>
     where
         I: Iterator<Item = &'a TokenWithContext>,
@@ -947,11 +949,7 @@ impl Parser {
     where
         I: Iterator<Item = &'a TokenWithContext>,
     {
-        try!(consume_expected_token!(
-            tokens,
-            &Token::LeftParen,
-            RequiredElement::LeftParen
-        ));
+        consume_expected_token!(tokens, &Token::LeftParen, RequiredElement::LeftParen)?;
         let mut arguments = vec![];
         if let Some(&Token::RightParen) = tokens.peek().map(|t| &t.token) {
         } else {
@@ -973,11 +971,7 @@ impl Parser {
                 }
             }
         }
-        try!(consume_expected_token!(
-            tokens,
-            &Token::RightParen,
-            RequiredElement::RightParen
-        ));
+        consume_expected_token!(tokens, &Token::RightParen, RequiredElement::RightParen)?;
         Ok(arguments)
     }
 
