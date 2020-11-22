@@ -1,6 +1,4 @@
 
-#### Implementations
-
 Rust [lox implementations](https://github.com/munificent/craftinginterpreters/wiki/Lox-implementations) in order of review.
 
 [rulox](https://github.com/mariosangiorgio/rulox)
