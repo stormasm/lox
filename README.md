@@ -3,4 +3,4 @@ Rust [lox implementations](https://github.com/munificent/craftinginterpreters/wi
 
 [mariosangiorgio/rulox](https://github.com/mariosangiorgio/rulox)
 
-[radogost/rulox](https://github.com/radogost/rlox)
+[radogost/rlox](https://github.com/radogost/rlox)
